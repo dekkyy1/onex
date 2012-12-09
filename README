@@ -1,5 +1,8 @@
 Tuttuorial for porting MIUI to OneX.
 
+Clone with thiss command:
+
+git clone git://github.com/dekkyy1/onex.git
 
 1. Make sure you have installed Android SDK. And add the sdk tools and platform-tools to PATH.
 
