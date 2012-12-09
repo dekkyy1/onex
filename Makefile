@@ -65,13 +65,14 @@
 	cp -v $(MIUI_VERSION)/jellybean_framework_jar/android/webkit/WebViewCore\$$EventHub\$$1.smali $(MIUI_VERSION)/miui_framework_jar/android/webkit/
 	cp -v $(MIUI_VERSION)/jellybean_framework_jar/com/android/internal/telephony/QualcommSharedRIL* $(MIUI_VERSION)/miui_framework_jar/com/android/internal/telephony/
 	cp -v $(MIUI_VERSION)/jellybean_framework_jar/com/android/internal/telephony/RIL*.smali $(MIUI_VERSION)/miui_framework_jar/com/android/internal/telephony/
-	cp -v resources/reboot/ShutdownThread*.smali $(MIUI_VERSION)/miui_framework_jar/com/android/internal/app/
+	cp -v resources/4wayreboot/ShutdownThread*.smali $(MIUI_VERSION)/miui_framework_jar/com/android/internal/app/
 	cp -v $(MIUI_VERSION)/jellybean_services_jar/com/android/server/WiredAccessoryObserver* $(MIUI_VERSION)/miui_services_jar/com/android/server/        
-	cp -v resources/bootanimation.zip $(MIUI_VERSION)/ONEX_MIUI_JB_$(MIUI_VERSION)/system/media/
+	cp -v resources/media/bootanimation.zip $(MIUI_VERSION)/ONEX_MIUI_JB_$(MIUI_VERSION)/system/media/
+
      
-	cp -v resources/bools.xml $(MIUI_VERSION)/miui_framework-res_apk/res/values/
-	cp -v resources/arrays.xml $(MIUI_VERSION)/miui_framework-res_apk/res/values/
-	cp -v resources/storage_list.xml $(MIUI_VERSION)/miui_framework-res_apk/res/xml/
+	cp -v resources/framework_res/res/values/bools.xml $(MIUI_VERSION)/miui_framework-res_apk/res/values/
+	cp -v resources/framework_res/res/values/arrays.xml $(MIUI_VERSION)/miui_framework-res_apk/res/values/
+	cp -v resources/framework_res/res/xml/storage_list.xml $(MIUI_VERSION)/miui_framework-res_apk/res/xml/
 	cp -v resources/home/arrays.xml $(MIUI_VERSION)/miui_MiuiHome_apk/res/values/
 	cp -v resources/bools.xml $(MIUI_VERSION)/miui_Settings_apk/res/values/
 
