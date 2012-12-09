@@ -71,16 +71,19 @@
 
      
 	cp -v resources/framework_res/res/values/bools.xml $(MIUI_VERSION)/miui_framework-res_apk/res/values/
+	cp -v resources/framework_res/res/values/arrays.xml $(MIUI_VERSION)/miui_framework-res_apk/res/values/
 	cp -v resources/framework_res/res/xml/storage_list.xml $(MIUI_VERSION)/miui_framework-res_apk/res/xml/
 	cp -v resources/home/arrays.xml $(MIUI_VERSION)/miui_MiuiHome_apk/res/values/
-	
+	cp -v resources/bools.xml $(MIUI_VERSION)/miui_Settings_apk/res/values/
 
 	
 	apktool b -f $(MIUI_VERSION)/miui_framework-res_apk
 	apktool b -f $(MIUI_VERSION)/miui_MiuiHome_apk
 	apktool b -f $(MIUI_VERSION)/miui_Settings_apk
 	
-     
+	PACKAGE_NAME = $(shell pwd | awk -F/ '{ print $$NF }')
+ 
+	include ../../Makefile     
            
      
 	echo "Preparing completed!"
