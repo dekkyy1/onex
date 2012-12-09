@@ -13,16 +13,16 @@
     package: zip sign
      
     get-miui:
-	wget -O resources/roms/miuiandroid_maguro-$(MIUI_VERSION).zip http://files.miuiandroid.com/$(MIUI_VERSION)/miuiandroid_maguro-$(MIUI_VERSION).zip
+	wget -O resources/roms/miuiandroid_maguro_jb-$(MIUI_VERSION).zip http://files.miuiandroid.com/$(MIUI_VERSION)/miuiandroid_maguro_jb-$(MIUI_VERSION).zip
      
     prepare-jb:
 	mkdir $(MIUI_VERSION)
 	ln -s ../resources/roms/$(JELLYBEAN_VERSION).zip $(MIUI_VERSION)/
-	ln -s ../resources/roms/miuiandroid_maguro-$(MIUI_VERSION).zip $(MIUI_VERSION)/
+	ln -s ../resources/roms/miuiandroid_maguro_jb-$(MIUI_VERSION).zip $(MIUI_VERSION)/
 	mkdir $(MIUI_VERSION)/$(JELLYBEAN_VERSION)
-	mkdir $(MIUI_VERSION)/miuiandroid_maguro-$(MIUI_VERSION)
+	mkdir $(MIUI_VERSION)/miuiandroid_maguro_jb-$(MIUI_VERSION)
 	mkdir $(MIUI_VERSION)/{jellybean_framework_jar,miui_framework_jar,jellybean_services_jar,miui_services_jar,miui_framework-res_apk}
-	cd $(MIUI_VERSION); unzip $(JELLYBEAN_VERSION).zip -d $(JELLYBEAN_VERSION); unzip miuiandroid_maguro-$(MIUI_VERSION).zip -d miuiandroid_maguro-$(MIUI_VERSION)
+	cd $(MIUI_VERSION); unzip $(JELLYBEAN_VERSION).zip -d $(JELLYBEAN_VERSION); unzip miuiandroid_maguro-$(MIUI_VERSION).zip -d miuiandroid_maguro_jb-$(MIUI_VERSION)
            
 	cp -rvp $(MIUI_VERSION)/$(JELLYBEAN_VERSION) $(MIUI_VERSION)/ONEX_MIUI_JB_$(MIUI_VERSION)
            
@@ -35,27 +35,27 @@
 	baksmali -o $(MIUI_VERSION)/miui_services_jar/ $(MIUI_VERSION)/miuiandroid_maguro-$(MIUI_VERSION)/system/framework/services.jar
 	baksmali -o $(MIUI_VERSION)/miui_android_policy_jar/ $(MIUI_VERSION)/miuiandroid_maguro-$(MIUI_VERSION)/system/framework/android.policy.jar
 
-	apktool if $(MIUI_VERSION)/miuiandroid_maguro-$(MIUI_VERSION)/system/framework/framework-res.apk
-	apktool if $(MIUI_VERSION)/miuiandroid_maguro-$(MIUI_VERSION)/system/framework/framework-miui-res.apk
-	apktool d -f $(MIUI_VERSION)/miuiandroid_maguro-$(MIUI_VERSION)/system/framework/framework-res.apk $(MIUI_VERSION)/miui_framework-res_apk/
-	apktool d -f $(MIUI_VERSION)/miuiandroid_maguro-$(MIUI_VERSION)/system/app/MiuiHome.apk $(MIUI_VERSION)/miui_MiuiHome_apk/
-	apktool d -f $(MIUI_VERSION)/miuiandroid_maguro-$(MIUI_VERSION)/system/app/Settings.apk $(MIUI_VERSION)/miui_Settings_apk/
+	apktool if $(MIUI_VERSION)/miuiandroid_maguro_jb-$(MIUI_VERSION)/system/framework/framework-res.apk
+	apktool if $(MIUI_VERSION)/miuiandroid_maguro_jb-$(MIUI_VERSION)/system/framework/framework-miui-res.apk
+	apktool d -f $(MIUI_VERSION)/miuiandroid_maguro_jb-$(MIUI_VERSION)/system/framework/framework-res.apk $(MIUI_VERSION)/miui_framework-res_apk/
+	apktool d -f $(MIUI_VERSION)/miuiandroid_maguro_jb-$(MIUI_VERSION)/system/app/MiuiHome.apk $(MIUI_VERSION)/miui_MiuiHome_apk/
+	apktool d -f $(MIUI_VERSION)/miuiandroid_maguro_jb-$(MIUI_VERSION)/system/app/Settings.apk $(MIUI_VERSION)/miui_Settings_apk/
      
 	rm $(MIUI_VERSION)/ONEX_MIUI_JB_$(MIUI_VERSION)/system/app/*
-	cp -v $(MIUI_VERSION)/miuiandroid_maguro-$(MIUI_VERSION)/system/app/* $(MIUI_VERSION)/ONEX_MIUI_JB_$(MIUI_VERSION)/system/app/
+	cp -v $(MIUI_VERSION)/miuiandroid_maguro_jb-$(MIUI_VERSION)/system/app/* $(MIUI_VERSION)/ONEX_MIUI_JB_$(MIUI_VERSION)/system/app/
 	rm $(MIUI_VERSION)/ONEX_MIUI_JB_$(MIUI_VERSION)/system/app/{Nfc,LegacyCamera,BugReport,MIUIStats,Updater}.apk
 	cp -v $(MIUI_VERSION)/$(JELLYBEAN_VERSION)/system/app/{Gallery2,Polly,Nfc}.apk $(MIUI_VERSION)/ONEX_MIUI_JB_$(MIUI_VERSION)/system/app/
-	cp -v $(MIUI_VERSION)/miuiandroid_maguro-$(MIUI_VERSION)/system/framework/* $(MIUI_VERSION)/ONEX_MIUI_JB_$(MIUI_VERSION)/system/framework
+	cp -v $(MIUI_VERSION)/miuiandroid_maguro_jb-$(MIUI_VERSION)/system/framework/* $(MIUI_VERSION)/ONEX_MIUI_JB_$(MIUI_VERSION)/system/framework
            
-	cp -v $(MIUI_VERSION)/miuiandroid_maguro-$(MIUI_VERSION)/system/lib/{content-types.properties,libffmpeg_xm.so,libffplayer_jni.so,liblbesec.so,liblocSDK_2.5OEM.so,libjni_resource_drm.so,libphotocli.so,libshell.so,libshell_jni.so,libshellservice.so} $(MIUI_VERSION)/ONEX_MIUI_JB_$(MIUI_VERSION)/system/lib/
+	cp -v $(MIUI_VERSION)/miuiandroid_maguro_jb-$(MIUI_VERSION)/system/lib/{content-types.properties,libffmpeg_xm.so,libffplayer_jni.so,liblbesec.so,liblocSDK_2.5OEM.so,libjni_resource_drm.so,libphotocli.so,libshell.so,libshell_jni.so,libshellservice.so} $(MIUI_VERSION)/ONEX_MIUI_JB_$(MIUI_VERSION)/system/lib/
            
-	cp -v $(MIUI_VERSION)/miuiandroid_maguro-$(MIUI_VERSION)/system/etc/{yellowpage.db,telocation.idf,weather_city.db,unicode_py_index.td,permission_config.json} $(MIUI_VERSION)/ONEX_MIUI_JB_$(MIUI_VERSION)/system/etc/
+	cp -v $(MIUI_VERSION)/miuiandroid_maguro_jb-$(MIUI_VERSION)/system/etc/{yellowpage.db,telocation.idf,weather_city.db,unicode_py_index.td,permission_config.json} $(MIUI_VERSION)/ONEX_MIUI_JB_$(MIUI_VERSION)/system/etc/
            
-	cp -v $(MIUI_VERSION)/miuiandroid_maguro-$(MIUI_VERSION)/system/etc/permissions/miui-framework.xml $(MIUI_VERSION)/ONEX_MIUI_JB_$(MIUI_VERSION)/system/etc/permissions/
+	cp -v $(MIUI_VERSION)/miuiandroid_maguro_jb-$(MIUI_VERSION)/system/etc/permissions/miui-framework.xml $(MIUI_VERSION)/ONEX_MIUI_JB_$(MIUI_VERSION)/system/etc/permissions/
            
-	cp -rv $(MIUI_VERSION)/miuiandroid_maguro-$(MIUI_VERSION)/system/media/* $(MIUI_VERSION)/ONEX_MIUI_JB_$(MIUI_VERSION)/system/media/
+	cp -rv $(MIUI_VERSION)/miuiandroid_maguro_jb-$(MIUI_VERSION)/system/media/* $(MIUI_VERSION)/ONEX_MIUI_JB_$(MIUI_VERSION)/system/media/
            
-	cp -v $(MIUI_VERSION)/miuiandroid_maguro-$(MIUI_VERSION)/system/xbin/{invoke-as,su,shelld} $(MIUI_VERSION)/ONEX_MIUI_JB_$(MIUI_VERSION)/system/xbin/
+	cp -v $(MIUI_VERSION)/miuiandroid_maguro_jb-$(MIUI_VERSION)/system/xbin/{invoke-as,su,shelld} $(MIUI_VERSION)/ONEX_MIUI_JB_$(MIUI_VERSION)/system/xbin/
             
 	cp -v $(MIUI_VERSION)/jellybean_framework_jar/android/hardware/Camera* $(MIUI_VERSION)/miui_framework_jar/android/hardware/
 	cp -v $(MIUI_VERSION)/jellybean_framework_jar/android/view/Hardware* $(MIUI_VERSION)/miui_framework_jar/android/view/

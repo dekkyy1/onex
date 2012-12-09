@@ -1,2 +1,20 @@
 Tuttuorial for porting MIUI to OneX.
-Comming soon...... ;)
+
+
+1. Make sure you have installed Android SDK. And add the sdk tools and platform-tools to PATH.
+
+vim .bashrc
+
+export PATH=$PATH:/home/xxx/android-sdk/tools:/home/xxx/anroid-sdk/platform-tools
+
+2. Copy the apktool and smali files from /bin folder to usr/local/bin on your PC.
+
+3. To get started, open terminal from the folder where you synced the files.
+
+TYPE:
+
+make MIUI_VERSION=2.12.7 get-miui (MIUI_VERSION is allways the current version) - This command will download Maguro MIUI rom to resource/roms folder.
+
+make MIUI_VERSION=2.12.7 prepare-jb - This command wil start porting :)
+
+Now we need to zip and sign the rom. Copy the makefile that is in ''Copy to working folder'' folder to your working folder which should be named like ''2.12.7'' and change the path in that Makefile to the original makefile. The line that should be changed is ''include ../../Makefile''
