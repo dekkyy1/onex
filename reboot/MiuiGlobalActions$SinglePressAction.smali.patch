@@ -1,0 +1,120 @@
+--- MiuiGlobalActions$SinglePressAction.smali.orig	2012-10-29 15:39:00.000000000 +0100
++++ MiuiGlobalActions$SinglePressAction.smali	2012-10-29 15:41:05.000000000 +0100
+@@ -16,6 +16,10 @@
+     name = "SinglePressAction"
+ .end annotation
+ 
++# static fields
++.field protected static rebootMode:I
++
++.field protected static final rebootOptions:[Ljava/lang/String;
+ 
+ # instance fields
+ .field private mIconResId:I
+@@ -28,6 +32,106 @@
+ 
+ 
+ # direct methods
++.method static constructor <clinit>()V
++    .registers 4
++
++    const-string v2, "Droid"
++
++    sget-object v3, Landroid/os/Build;->MODEL:Ljava/lang/String;
++
++    invoke-virtual {v2, v3}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v2
++
++    if-nez v2, :cond_3b
++
++    const-string v2, "GT-I9000"
++
++    sget-object v3, Landroid/os/Build;->MODEL:Ljava/lang/String;
++
++    invoke-virtual {v2, v3}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v2
++
++    if-nez v2, :cond_3b
++
++    const/4 v0, 0x4
++
++    new-array v0, v0, [Ljava/lang/String;
++
++    const/4 v1, 0x0
++
++    const-string v2, "Normal"
++
++    aput-object v2, v0, v1
++
++    const/4 v1, 0x1
++
++    const-string v2, "Hot Boot"
++
++    aput-object v2, v0, v1
++
++    const/4 v1, 0x2
++
++    const-string v2, "GT-I9100"
++
++    sget-object v3, Landroid/os/Build;->MODEL:Ljava/lang/String;
++
++    invoke-virtual {v2, v3}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v2
++
++    if-nez v2, :cond_2f
++
++    const-string v2, "Bootloader"
++
++    goto :goto_31
++
++    :cond_2f
++    const-string v2, "Download"
++
++    :goto_31
++    aput-object v2, v0, v1
++
++    const/4 v1, 0x3
++
++    const-string v2, "Recovery"
++
++    aput-object v2, v0, v1
++
++    sput-object v0, Lcom/android/internal/policy/impl/MiuiGlobalActions$SinglePressAction;->rebootOptions:[Ljava/lang/String;
++
++    goto :goto_4f
++
++    :cond_3b
++    const/4 v0, 0x3
++
++    new-array v0, v0, [Ljava/lang/String;
++
++    const/4 v1, 0x0
++
++    const-string v2, "Normal"
++
++    aput-object v2, v0, v1
++
++    const/4 v1, 0x1
++
++    const-string v2, "Hot Boot"
++
++    aput-object v2, v0, v1
++
++    const/4 v1, 0x2
++
++    const-string v2, "Recovery"
++
++    aput-object v2, v0, v1
++
++    sput-object v0, Lcom/android/internal/policy/impl/MiuiGlobalActions$SinglePressAction;->rebootOptions:[Ljava/lang/String;
++
++    :goto_4f
++    return-void
++.end method
++
+ .method protected constructor <init>(II)V
+     .registers 3
+     .parameter "iconResId"

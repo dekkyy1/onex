@@ -1,0 +1,19 @@
+1. You need ICS base for DHD which will be your building base (recomended existz build from Inspire section on xda)
+2. You need ICS MIUI from Nexus S
+3. You will need to copy from MIUI base to you building base these
+-everything form system/app folder (except nfc.apk) (make sure you delete all apk's from your base)
+-everything from system/framework folder
+-content-types.properties and liblesec.so from system/lib folder
+-yellowpage.db and telocation.td from system/etc folder
+-miui-framework.xml from system/etc/permissions folder
+-complete system/media folder
+-invoke-as from system/xbin
+- you will have to add permision in updater-script for liblesec.so and invoke-as(look at the attache updater script from my rom)
+- you will need to add some lines in build.prop(take a look at my build.prop
+
+5. When you do all steps above, you will need to flash the rom. The rom won't boot, but you will have to take a logcat and see which smali has the error.
+The errors will possibly be in framework.jar. You will need to decompile the framework from your base and from miui. 
+In logcat you will see which smali has error and at which line, so you will have to copy that line from your base framework.jar smali to miui framework.jar smali. (sometimes you will need to replace the whole smali)
+in every logcat you will only see one or two errors, so when you fix them, you will have to flash the rom again and again, till all errors are fixed.
+If you will have any other question, just ask me!
+I know it takes time and there is a lot of flashing, so i wish you luck:))
