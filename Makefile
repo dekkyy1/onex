@@ -22,7 +22,7 @@
 	mkdir $(MIUI_VERSION)/$(JELLYBEAN_VERSION)
 	mkdir $(MIUI_VERSION)/miuiandroid_maguro_jb-$(MIUI_VERSION)
 	mkdir $(MIUI_VERSION)/{jellybean_framework_jar,miui_framework_jar,jellybean_services_jar,miui_services_jar,miui_framework-res_apk}
-	cd $(MIUI_VERSION); unzip $(JELLYBEAN_VERSION).zip -d $(JELLYBEAN_VERSION); unzip miuiandroid_maguro-$(MIUI_VERSION).zip -d miuiandroid_maguro_jb-$(MIUI_VERSION)
+	cd $(MIUI_VERSION); unzip $(JELLYBEAN_VERSION).zip -d $(JELLYBEAN_VERSION); unzip miuiandroid_maguro_jb-$(MIUI_VERSION).zip -d miuiandroid_maguro_jb-$(MIUI_VERSION)
            
 	cp -rvp $(MIUI_VERSION)/$(JELLYBEAN_VERSION) $(MIUI_VERSION)/ONEX_MIUI_JB_$(MIUI_VERSION)
            
@@ -31,9 +31,9 @@
 
 	baksmali -o $(MIUI_VERSION)/jellybean_framework_jar/ $(MIUI_VERSION)/$(JELLYBEAN_VERSION)/system/framework/framework.jar
 	baksmali -o $(MIUI_VERSION)/jellybean_services_jar/ $(MIUI_VERSION)/$(JELLYBEAN_VERSION)/system/framework/services.jar
-	baksmali -o $(MIUI_VERSION)/miui_framework_jar/ $(MIUI_VERSION)/miuiandroid_maguro-$(MIUI_VERSION)/system/framework/framework.jar
-	baksmali -o $(MIUI_VERSION)/miui_services_jar/ $(MIUI_VERSION)/miuiandroid_maguro-$(MIUI_VERSION)/system/framework/services.jar
-	baksmali -o $(MIUI_VERSION)/miui_android_policy_jar/ $(MIUI_VERSION)/miuiandroid_maguro-$(MIUI_VERSION)/system/framework/android.policy.jar
+	baksmali -o $(MIUI_VERSION)/miui_framework_jar/ $(MIUI_VERSION)/miuiandroid_maguro_jb-$(MIUI_VERSION)/system/framework/framework.jar
+	baksmali -o $(MIUI_VERSION)/miui_services_jar/ $(MIUI_VERSION)/miuiandroid_maguro_jb-$(MIUI_VERSION)/system/framework/services.jar
+	baksmali -o $(MIUI_VERSION)/miui_android_policy_jar/ $(MIUI_VERSION)/miuiandroid_maguro_jb-$(MIUI_VERSION)/system/framework/android.policy.jar
 
 	apktool if $(MIUI_VERSION)/miuiandroid_maguro_jb-$(MIUI_VERSION)/system/framework/framework-res.apk
 	apktool if $(MIUI_VERSION)/miuiandroid_maguro_jb-$(MIUI_VERSION)/system/framework/framework-miui-res.apk
@@ -73,21 +73,37 @@
 	cp -v resources/framework_res/res/values/bools.xml $(MIUI_VERSION)/miui_framework-res_apk/res/values/
 	cp -v resources/framework_res/res/xml/storage_list.xml $(MIUI_VERSION)/miui_framework-res_apk/res/xml/
 	cp -v resources/home/arrays.xml $(MIUI_VERSION)/miui_MiuiHome_apk/res/values/
-	
 
+	cd $(MIUI_VERSION)/miui_android_policy_jar/com/android/internal/policy/impl/; patch -p0 < reboot/
 	
-	apktool b -f $(MIUI_VERSION)/miui_framework-res_apk
-	apktool b -f $(MIUI_VERSION)/miui_MiuiHome_apk
-	apktool b -f $(MIUI_VERSION)/miui_Settings_apk
+	
+	cd $(MIUI_VERSION)/miui_framework_jar; smali -o ../classes.dex ./
+	mkdir $(MIUI_VERSION)/framework_jar_temp
+	cd $(MIUI_VERSION)/framework_jar_temp; unzip ../[ONEX_MIUI_JB_$(MIUI_VERSION)/system/framework/framework.jar; mv ../classes.dex ./; zip -r ../ONEX_MIUI_JB_$(MIUI_VERSION)/system/framework/framework.jar *
+
+	cd $(MIUI_VERSION)/miui_services_jar; smali -o ../classes.dex ./
+	mkdir $(MIUI_VERSION)/services_jar_temp
+	cd $(MIUI_VERSION)/services_jar_temp; unzip ../[ONEX_MIUI_JB_$(MIUI_VERSION)/system/framework/services.jar; mv ../classes.dex ./; zip -r ../ONEX_MIUI_JB_$(MIUI_VERSION)/system/framework/services.jar *
+
+	cd $(MIUI_VERSION)/miui_android_policy_jar; smali -o ../classes.dex ./
+	mkdir $(MIUI_VERSION)/policy_jar_temp
+	cd $(MIUI_VERSION)/policy_jar_temp; unzip ../[ONEX_MIUI_JB_$(MIUI_VERSION)/system/framework/android.policy.jar; mv ../classes.dex ./; zip -r ../ONEX_MIUI_JB_$(MIUI_VERSION)/system/framework/android.policy.jar *
+
+
+	apktool b $(MIUI_VERSION)/miui_MiuiHome_apk
+	mkdir $(MIUI_VERSION)/miui_MiuiHome_apk/dist/temp
+	cd $(MIUI_VERSION)/miui_MiuiHome_apk/dist; unzip MiuiHome.apk; cd temp; 	unzip ../../../ONEX_MIUI_JB_$(MIUI_VERSION)/system/app/MiuiHome.apk; cp ../resources.arsc ./; zip -r ../../../ONEX_MIUI_JB_$(MIUI_VERSION)/system/app/MiuiHome.apk *
+
+
+	apktool b $(MIUI_VERSION)/miui_framework-res_apk
+	mkdir $(MIUI_VERSION)/miui_framework-res_apk/dist/temp
+	cd $(MIUI_VERSION)/miui_framework-res_apk/dist; unzip framework-res.apk; cd temp; 	unzip ../../../ONEX_MIUI_JB_$(MIUI_VERSION)/system/framework/framework-res.apk; cp ../{resources.arsc,res} ./; zip -r ../../../ONEX_MIUI_JB_$(MIUI_VERSION)/system/framework/framework-res.apk *
+	
+	
 	
      
            
      
 	echo "Preparing completed!"
-	echo "###"
-	echo ""
-	echo "- edit updater-script"
-	echo "- edit build.prop"
-	echo "- compile framework.jar, services.jar"
-	echo "- create the flashable package :)"
+	
 
